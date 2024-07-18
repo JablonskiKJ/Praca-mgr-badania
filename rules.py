@@ -146,16 +146,6 @@ class Rules:
         self.rules = self.rules.assign(sentence = sentence)
         return self.rules
     
-    # def sort(self):
-    #     #XXX: Jeśli makeSentence działa bez sortowania to sort jest nie potrzebny
-    #     def sortList(i):
-    #         n=self.rules['rule'][i].copy()
-    #         return sorted(n)
-        
-    #     range_len_df = range(len(self.rules))
-    #     sorted_rule = [sortList(i) for i in range_len_df]
-    #     self.rules = self.rules.assign(sorted_rule = sorted_rule)
-    
     #unikatowe reguły
     def uniqueRules(self) -> pd.DataFrame:
         self.unique_rules=self.rules.drop_duplicates(subset=['sentence'])
@@ -218,50 +208,6 @@ class Rules:
         u=pd.Index(u)
         self.split=df2.loc[:,u]
         return self.split
-    
-    # version 1 wszystkie atrybuty
-    # #ranking odseparowanych
-    # def makeRanking(self) -> pd.DataFrame:
-    #     """Return pd.DataFrame 'ranking' of features"""
-    #     ranking={}
-        
-    #     supported_rules = lambda split,name: len(split.loc[split[name]>0,name])
-    #     rule_support = lambda split,name: max(split.loc[split[name]==max(split.loc[:,name]),'support'])
-
-    #     for x in self.split.columns[:-1]:
-    #         ranking.update({x: (self.split[x].max(),supported_rules(self.split,x),rule_support(self.split,x))})
-
-        
-    #     self.ranking=pd.DataFrame(dict(sorted(ranking.items(), 
-    #                              key=lambda item: (item[1][0],
-    #                                                item[1][1],
-    #                                                item[1][2]), 
-    #                              reverse=True))).T
-    #     self.ranking.columns=['separation_rate','supported_rules','rule_support']                         
-    #     return self.ranking
-    
-    # # version 2 bez atrybutów które nie zostały wykorzystane przez algorytm zachłanny
-    # #ranking odseparowanych
-    # def makeRanking(self) -> pd.DataFrame:
-    #     """Return pd.DataFrame 'ranking' of features"""
-    #     ranking={}
-    
-    #     supported_rules = lambda split,name: len(split.loc[split[name]>0,name])
-    #     rule_support = lambda split,name: max(split.loc[(split[name]==max(split[name])),'support']) if (split[name].any()) else None
-
-    #     for x in self.split.columns[:-2]:
-    #         ranking.update({x: (self.split[x].max(),supported_rules(self.split,x),rule_support(self.split,x))})
-
-        
-    #     ranking=pd.DataFrame(dict(sorted(ranking.items(), 
-    #                              key=lambda item: (item[1][0],
-    #                                                item[1][1],
-    #                                                item[1][2]), 
-    #                              reverse=True))).T
-        
-    #     self.ranking = ranking.dropna()
-    #     self.ranking.columns=['separation_rate','supported_rules','rule_support']                         
-    #     return self.ranking
     
     # version 3
     # 
